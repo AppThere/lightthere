@@ -54,7 +54,7 @@ fun ExportOutputRowsDialog(onRun: (command: String, params: JsonObject) -> Unit,
                 val params = buildJsonObject {
                 put("removeLocation", f0)
                 }
-                /* TODO: which command this dialog runs was not found */
+                onRun("app.export", params)
                 onDismiss()
             }) { Text("OK") }
         },

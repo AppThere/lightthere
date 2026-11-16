@@ -56,7 +56,7 @@ fun ExportQualityRowsDialog(onRun: (command: String, params: JsonObject) -> Unit
                 put("jxlLossless", f0)
                 put("jxlProgressive", f1)
                 }
-                /* TODO: which command this dialog runs was not found */
+                onRun("app.export", params)
                 onDismiss()
             }) { Text("OK") }
         },

@@ -62,7 +62,7 @@ fun ContactSheetBodyDialog(onRun: (command: String, params: JsonObject) -> Unit,
                 f3.trim().replace(',', '.').toDoubleOrNull()?.let { put("rows", it) }
                 put("captions", f4)
                 }
-                /* TODO: which command this dialog runs was not found */
+                onRun("export.contactSheet", params)
                 onDismiss()
             }) { Text("OK") }
         },
@@ -70,8 +70,8 @@ fun ContactSheetBodyDialog(onRun: (command: String, params: JsonObject) -> Unit,
         Column(Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).padding(bottom = 12.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("Paper", style = MaterialTheme.typography.labelLarge)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                FilterChip(f0 == "\"a4\".into()", { f0 = "\"a4\".into()" }, label = { Text("A4") })
-                FilterChip(f0 == "\"letter\".into()", { f0 = "\"letter\".into()" }, label = { Text("Letter") })
+                FilterChip(f0 == "a4", { f0 = "a4" }, label = { Text("A4") })
+                FilterChip(f0 == "letter", { f0 = "letter" }, label = { Text("Letter") })
             }
             Row(Modifier.fillMaxWidth().clickable { f1 = !f1 }, verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(f1, { f1 = it })
