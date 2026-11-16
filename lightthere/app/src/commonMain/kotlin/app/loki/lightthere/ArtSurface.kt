@@ -1,6 +1,8 @@
 package app.loki.lightthere
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import app.loki.kit.ArtCanvas
 import app.loki.kit.CanvasView
 import app.loki.kit.EngineClient
+import app.loki.kit.LocalWorkspace
 import app.loki.kit.renderScaleFor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -38,6 +41,8 @@ const val MAX_RENDER_SCALE = 2f
 @OptIn(FlowPreview::class)
 @Composable
 fun ArtSurface(native: SurfaceEngine, revision: Int, modifier: Modifier) {
+    val ws = LocalWorkspace.current
+    var grid by remember { mutableStateOf(false) }
     val client = remember(native) { EngineClient(native.transport) }
     val view = remember { CanvasView() }
     var page by remember { mutableStateOf<Rect?>(null) }
@@ -59,13 +64,19 @@ fun ArtSurface(native: SurfaceEngine, revision: Int, modifier: Modifier) {
             image = native.renderPage(current, scale)?.let { rgbaToImageBitmap(it.width, it.height, it.rgba) }
         }
     }
-    Box(modifier) {
-        ArtCanvas(page, image, view, onInput = {}, modifier = Modifier.fillMaxSize(), panTool = true)
-        if (image == null) {
-            Text(
-                if (count == 0) "No photos yet: File › Import…" else "the engine rendered nothing",
-                Modifier.align(Alignment.Center), color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+    Column(modifier) {
+        if (ws != null) LibraryBar(ws.state, grid, { grid = it }, { c, p -> ws.run(c, p) {} })
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            if (grid && ws != null) LibraryGrid(native, ws.state, revision, { c, p -> ws.run(c, p) {} }, onOpen = { grid = false })
+            else {
+                ArtCanvas(page, image, view, onInput = {}, modifier = Modifier.fillMaxSize(), panTool = true)
+                if (image == null) {
+                    Text(
+                        if (count == 0) "No photos yet: File › Import…" else "the engine rendered nothing",
+                        Modifier.align(Alignment.Center), color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
     }
 }

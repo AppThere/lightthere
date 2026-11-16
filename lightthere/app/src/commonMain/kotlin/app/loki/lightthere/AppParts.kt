@@ -86,7 +86,7 @@ private fun activePhoto(state: JsonElement?): JsonElement? {
 fun docOf(state: JsonElement?): JsonElement? = activePhoto(state)
 
 /** Commands this file runs, so the coverage test checks the engine still has them. */
-val PANEL_COMMANDS: Set<String> = setOf("library.select", "develop.set", "develop.resetSection", "preset.apply", "photo.rate", "photo.flag", "photo.rotateLeft", "photo.rotateRight", "library.next", "library.previous", "library.import")
+val PANEL_COMMANDS: Set<String> = setOf("library.filter", "library.sort", "library.select", "develop.set", "develop.resetSection", "preset.apply", "photo.rate", "photo.flag", "photo.rotateLeft", "photo.rotateRight", "library.next", "library.previous", "library.import")
 
 /** The panel open at the start (null: the dock starts collapsed). */
 val FIRST_PANEL: String? = "develop"
