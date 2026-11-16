@@ -121,17 +121,17 @@ fun toolInHand(state: JsonElement?): String? = null
 fun OptionsBar(tool: String, tools: List<RailTool>, state: JsonElement?, run: (String, JsonObject) -> Unit) {
     val p = activePhoto(state)
     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-        fun go(command: String) = run("engine.execute", buildJsonObject { put("command", command); put("params", JsonObject(emptyMap())) })
+        fun go(command: String) = run(command, JsonObject(emptyMap()))
         IconButton({ go("library.previous") }, Modifier.size(36.dp)) { Icon(Lucide.ChevronLeft, "Previous photo", Modifier.size(20.dp)) }
         IconButton({ go("library.next") }, Modifier.size(36.dp)) { Icon(Lucide.ChevronRight, "Next photo", Modifier.size(20.dp)) }
         val rating = (p.long("rating") ?: 0).toInt()
         for (n in 1..5) IconButton(
-            { run("engine.execute", buildJsonObject { put("command", "photo.rate"); put("params", buildJsonObject { put("rating", if (n == rating) 0 else n) }) }) },
+            { run("photo.rate", buildJsonObject { put("rating", if (n == rating) 0 else n) }) },
             Modifier.size(32.dp), enabled = p != null,
         ) { Icon(Lucide.Star, "Rate $n", Modifier.size(18.dp), tint = if (n <= rating) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
         val flag = p.str("flag") ?: "none"
         IconButton(
-            { run("engine.execute", buildJsonObject { put("command", "photo.flag"); put("params", buildJsonObject { put("flag", if (flag == "pick") "none" else "pick") }) }) },
+            { run("photo.flag", buildJsonObject { put("flag", if (flag == "pick") "none" else "pick") }) },
             Modifier.size(36.dp), enabled = p != null,
         ) { Icon(Lucide.Flag, "Pick", Modifier.size(18.dp), tint = if (flag == "pick") MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) }
         IconButton({ go("photo.rotateLeft") }, Modifier.size(36.dp), enabled = p != null) { Icon(Lucide.RotateCcw, "Rotate left", Modifier.size(18.dp)) }
@@ -180,7 +180,7 @@ fun dockPanels(state: JsonElement?, revision: Int, run: (String, JsonObject) -> 
 )
 
 private fun exec(run: (String, JsonObject) -> Unit, command: String, params: JsonObject) =
-    run("engine.execute", buildJsonObject { put("command", command); put("params", params) })
+    run(command, params)
 
 @Composable
 private fun PhotosPanel(state: JsonElement?, run: (String, JsonObject) -> Unit, modifier: Modifier) {
