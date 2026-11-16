@@ -52,7 +52,7 @@ fun ExportSavePresetRowDialog(onRun: (command: String, params: JsonObject) -> Un
             TextButton(onClick = onDismiss) { Text("Cancel") }
             TextButton(onClick = {
                 val params = buildJsonObject {
-                if (f0.isNotBlank()) put("presetName", f0)
+                if (f0.isNotBlank()) put("name", f0)
                 }
                 onRun("export.savePreset", params)
                 onDismiss()

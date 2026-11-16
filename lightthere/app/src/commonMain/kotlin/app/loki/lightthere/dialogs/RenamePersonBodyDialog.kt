@@ -54,7 +54,7 @@ fun RenamePersonBodyDialog(onRun: (command: String, params: JsonObject) -> Unit,
                 val params = buildJsonObject {
                 put("merge", f0)
                 }
-                /* TODO: which command this dialog runs was not found */
+                onRun("faces.renamePerson", params)
                 onDismiss()
             }) { Text("OK") }
         },

@@ -52,7 +52,7 @@ fun FacesGpuSectionDialog(onRun: (command: String, params: JsonObject) -> Unit, 
             TextButton(onClick = onDismiss) { Text("Cancel") }
             TextButton(onClick = {
                 val params = buildJsonObject {
-                put("cpu", f0)
+                put("cpuOnly", f0)
                 }
                 onRun("faces.gpu", params)
                 onDismiss()

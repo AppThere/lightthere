@@ -54,7 +54,7 @@ fun ExportNamingRowsDialog(onRun: (command: String, params: JsonObject) -> Unit,
                 val params = buildJsonObject {
                 if (f0.isNotBlank()) put("naming", f0)
                 }
-                /* TODO: which command this dialog runs was not found */
+                onRun("app.export", params)
                 onDismiss()
             }) { Text("OK") }
         },

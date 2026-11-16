@@ -56,7 +56,7 @@ fun SlideshowExportSlideshowExportBodyDialog(onRun: (command: String, params: Js
                 put("quality", f0)
                 put("fullScreen", f1)
                 }
-                /* TODO: which command this dialog runs was not found */
+                onRun("slideshow.export", params)
                 onDismiss()
             }) { Text("OK") }
         },
