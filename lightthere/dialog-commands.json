@@ -1,0 +1,11 @@
+{
+  "CaptureTimeBody": "photo.setCaptureTime",
+  "ContactSheetBody": "export.contactSheet",
+  "ExportOutputRows": "app.export",
+  "KeywordSetBody": "keyword.saveSet",
+  "LightroomDestination": "library.importLightroom",
+  "RenameBody": "photo.rename",
+  "RenamePersonBody": "faces.renamePerson",
+  "SlideshowExportSlideshowExportBody": "slideshow.export",
+  "SmartRulesBody": "album.setRules"
+}
